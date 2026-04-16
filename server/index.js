@@ -12,7 +12,10 @@ const rateLimit = require("express-rate-limit");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || "*",
+}));
+
 app.use(express.json());
 
 const aiLimiter = rateLimit({
@@ -259,7 +262,7 @@ app.post("/regenerate-day", authMiddleware, async (req, res) => {
   if (!destination || !style || !interests || !dayNumber) {
     return res.status(400).json({ error: "Missing or invalid input" });
   }
-  
+
   try {
     const response = await openai.chat.completions.create({
       model: "openrouter/auto",
