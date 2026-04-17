@@ -1,5 +1,8 @@
 # ✈️ TripGenei AI – Smart Travel Planner
 
+## 🌐 Live Demo
+👉 https://tripgenei-ai.vercel.app
+
 ## 📌 Overview
 TripGenei AI is a full-stack AI-powered travel planner that generates personalized multi-day itineraries based on user preferences such as destination, travel style, and interests.
 
@@ -18,6 +21,7 @@ The system uses AI to create structured daily plans and enhances them with real-
 - 💾 Save and manage travel plans
 - 🗑 Delete saved trips
 - 📱 Responsive modern UI
+- 🛡 Rate limiting & input validation
 
 ---
 
@@ -50,12 +54,15 @@ The system uses AI to create structured daily plans and enhances them with real-
 - Full CRUD system for saved plans
 - Real-time regeneration of individual itinerary days
 - API integration for AI + image generation
+- Rate limiting to protect AI endpoints
+- Secure authentication with bcrypt password hashing
+- Protected routes on both frontend and backend
 
 ---
 
 ## 📂 Project Structure
-- client/ → React frontend
-- server/ → Node.js backend
+- client/ → React frontend (deployed on Vercel)
+- server/ → Node.js backend (deployed on Render)
 
   
 ---
@@ -69,13 +76,13 @@ This project was built to demonstrate full-stack development skills, API integra
 
 ## 📈 Future Improvements
 
-- Deploy frontend & backend
 - Add map integration
 - Export itinerary as PDF
 - Improve backend structure (MVC pattern)
+- Add more interest categories
 
 ---
 
 ## 👤 Author
 
-Built by a 3-rd year software engineering student focused on full-stack + AI development.
+Built by Sari Sweid — 3-rd year software engineering student at ORT Braude.
