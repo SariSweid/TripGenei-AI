@@ -30,7 +30,11 @@ function Register() {
                 toast.success("Account created 🎉"); navigate("/login");
             }
         } catch (err) {
-            toast.error(err.response?.data?.error || "Register failed");
+            if (err.response?.data?.error) {
+                toast.error(err.response.data.error);
+            } else {
+                toast.error("Register failed");
+            }
         } finally {
             setLoading(false);
         }

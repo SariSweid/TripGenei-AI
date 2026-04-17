@@ -32,8 +32,12 @@ function Login() {
 
                 navigate("/");
             }
-        } catch {
-            toast.error("Login failed");
+        } catch (err) {
+            if (err.response?.data?.error) {
+                toast.error(err.response.data.error);
+            } else {
+                toast.error("Login failed");
+            }
         } finally {
             setLoading(false);
         }
