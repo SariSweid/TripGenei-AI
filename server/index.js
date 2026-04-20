@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const OpenAI = require("openai");
+const Anthropic = require("@anthropic-ai/sdk");
 const axios = require("axios");
 const mongoose = require("mongoose");
 const Plan = require("./models/Plan");
@@ -27,9 +27,8 @@ const aiLimiter = rateLimit({
 app.use("/plan", aiLimiter);
 app.use("/regenerate-day", aiLimiter);
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENROUTER_API_KEY,
-  baseURL: "https://openrouter.ai/api/v1",
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 function authMiddleware(req, res, next) {
@@ -123,8 +122,9 @@ app.post("/plan", async (req, res) => {
   }
 
   try {
-    const response = await openai.chat.completions.create({
-      model: "openrouter/auto",
+    const response = await anthropic.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 2000,
       messages: [
         {
           role: "user",
@@ -160,7 +160,7 @@ Rules:
       ],
     });
 
-    const rawText = response.choices[0].message.content;
+    const rawText = response.content[0].text;
     const text = cleanJSON(rawText);
 
     console.log("RAW AI OUTPUT:", rawText);
@@ -264,8 +264,9 @@ app.post("/regenerate-day", authMiddleware, async (req, res) => {
   }
 
   try {
-    const response = await openai.chat.completions.create({
-      model: "openrouter/auto",
+    const response = await anthropic.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 1000,
       messages: [
         {
           role: "user",
@@ -295,7 +296,7 @@ app.post("/regenerate-day", authMiddleware, async (req, res) => {
         }
       ]
     });
-    const rawText = response.choices[0].message.content;
+    const rawText = response.content[0].text;
     const text = cleanJSON(rawText);
 
     let newDay;
